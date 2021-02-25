@@ -1,19 +1,52 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 function App() {
   return (
     <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
-          Learn React
-        </a>
-      </header>
+      <div className='landing'>
+        <div className='container-image'></div>
+        <div className='container-login'>
+          <div className='login'>
+            <h1>Log in</h1>
+            <h3>
+              If you don't have an account yet, please <a href='#'>register</a> first.
+            </h3>
+            <form action='' className='login__form'>
+              <input
+                type='email'
+                className='login__form__input'
+                id='email'
+                name='email'
+                placeholder='Your e-mail'
+                required
+              />
+              <input
+                type='password'
+                className='login__form__input'
+                id='password'
+                name='password'
+                placeholder='Your password'
+                required
+              />
+              <button className='login__form__forgot-pass'>I forgot my password</button>
+              <label>
+                <input
+                  type='checkbox'
+                  className='login__form__check'
+                  id='remember'
+                  name='remember'
+                  value='remember'
+                />
+                Remember me
+              </label>
+              <button type='submit' className='login__form__btn-submit'>
+                Log in
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
