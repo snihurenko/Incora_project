@@ -10,11 +10,16 @@ $bgImage: './img/balloons.jpg';
   padding: 0;
 }
 
+html {
+  height: 100%;
+}
+
 a {
   color: $colorBtn;
 }
 
 .landing {
+  min-height: 600px;
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -25,12 +30,13 @@ a {
   background: no-repeat center url($bgImage);
   background-size: cover;
   width: 65%;
+  height: 100%;
   display: block;
 }
 
 .container-login {
   width: 35%;
-  height: 100%;
+  height: 100vh;
 }
 
 .login {

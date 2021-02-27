@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 import './App.scss';
 
 function App() {
@@ -9,9 +10,11 @@ function App() {
         <div className='container-login'>
           <div className='login'>
             <h1>Log in</h1>
-            <h3>
-              If you don't have an account yet, please <a href='#'>register</a> first.
-            </h3>
+            <Router>
+              <h3>
+                If you don't have an account yet, please <Link to='/register'>register</Link> first.
+              </h3>
+            </Router>
             <form action='' className='login__form'>
               <input
                 type='email'
