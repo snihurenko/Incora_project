@@ -32,56 +32,68 @@ class IApp implements App {
   public projects: Project[] = [];
   constructor(
     public name: string,
-  ){}
-  setName(name: string){
-    this.name = name;
+  ) { }
+  setName(name: string) {
+      this.name = name;
   }
-  addProject(project: Project){
-
+  addProject(project: Project) {
+      this.projects.push(project);
   }
 };
 
 class IProject implements Project {
   public tasks: Task[] = [];
 
-  addTask(task: Task){
-    this.tasks.push(task);
+  addTask(task: Task) {
+      this.tasks.push(task);
   }
-  editTask(task: Partial<Task>){
-
+  editTask(task: Partial<Task>) {
+    this.tasks.map(elem => {
+      if (elem.id === task.id){
+        return task;
+      } else {
+        return elem;
+      }
+    })
   }
-  deleteTask(id: number){
-    this.tasks = this.tasks.filter(task => task.id !== id);
+  deleteTask(id: number) {
+      this.tasks = this.tasks.filter(task => task.id !== id);
   }
-  getTotalTime(){
-    let time = 0;
-    this.tasks.forEach(task => time += task.durationInMin)
-    return time;
+  getTotalTime() {
+      let time = 0;
+      this.tasks.forEach(task => time += task.durationInMin)
+      return time;
   }
-  getAllTasksByDeveloper(id: number){
-
+  getAllTasksByDeveloper(id: number) {
+      let totalTasks : Task[] = [];
+      this.tasks.forEach(elem => {
+        if (elem.developer.id === id){
+          totalTasks.push(elem);
+        }
+      })
+      return totalTasks;
   }
 };
 
 class ITask implements Task {
   constructor(
-    public id: number,
-    public durationInMin: number,
-    public completed: boolean,
-    public developer: User,
-    public title: string
-  ){}
-  getInfo(){
-    return `${this.id} ${this.title} ${this.completed}`;
+      public id: number,
+      public durationInMin: number,
+      public completed: boolean,
+      public developer: User,
+      public title: string
+  ) { }
+  getInfo() {
+      return `${this.id} ${this.title} ${this.completed}`;
   }
 };
 
 class IUser implements User {
   constructor(
-    public id: number,
-    public name: string
-  ){}
+      public id: number,
+      public name: string
+  ) { }
 };
 
-
 export {};
+
