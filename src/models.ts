@@ -50,7 +50,10 @@ class IProject implements Project {
   editTask(task: Partial<Task>) {
     this.tasks.map(elem => {
       if (elem.id === task.id) {
-        return task;
+        return {
+          ...elem,
+          ...task
+        };
       } else {
         return elem;
       }
@@ -60,18 +63,10 @@ class IProject implements Project {
     this.tasks = this.tasks.filter(task => task.id !== id);
   }
   getTotalTime() {
-    let time = 0;
-    this.tasks.forEach(task => time += task.durationInMin)
-    return time;
+    return this.tasks.reduce((acc, cur) => acc += cur.durationInMin, 0);
   }
   getAllTasksByDeveloper(id: number) {
-    let totalTasks: Task[] = [];
-    this.tasks.forEach(elem => {
-      if (elem.developer.id === id) {
-        totalTasks.push(elem);
-      }
-    })
-    return totalTasks;
+    return this.tasks.filter(task => task.developer.id === id);
   }
 };
 
@@ -94,6 +89,3 @@ class IUser implements User {
     public name: string
   ) { }
 };
-
-export { };
-
