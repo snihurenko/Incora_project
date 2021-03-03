@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 import { Pagination } from './components/pagination/Pagination';
 import css from './components/pagination/Pagination.module.scss';
@@ -9,7 +9,7 @@ import timerCss from './components/timer/Timer.module.scss';
 function App() {
   return (
     <div className='App'>
-      <Pagination
+      {/* <Pagination
         activePage={2}
         totalItems={10}
         perPage={1}
@@ -24,10 +24,27 @@ function App() {
         perPage={1}
         classes={{ btn: css.btn, activeBtn: css.active }}
         onChangePage={newPage => {}}
+      /> */}
+
+      <Timer
+        time={30}
+        autostart={true}
+        step={1000}
+        onTick={() => {}}
+        onTimeEnd={() => {}}
+        onTimeStart={() => {}}
+        onTimePause={() => {}}
       />
 
-      {/* <Timer time={1000} autostart={true} step={3000} onTick={() => {}} onTimeEnd={() => {}}
-        onTimeStart={() => {}} onTimePause={() => {}} /> */}
+      <Timer
+        time={200}
+        autostart={false}
+        step={1000}
+        onTick={() => {}}
+        onTimeEnd={() => {}}
+        onTimeStart={() => {}}
+        onTimePause={() => {}}
+      />
     </div>
   );
 }
