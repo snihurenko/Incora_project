@@ -1,19 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import { Pagination } from './components/pagination/Pagination';
+import css from './components/pagination/Pagination.module.scss';
+
+import { Timer } from './components/timer/Timer';
+import timerCss from './components/timer/Timer.module.scss';
 
 function App() {
   return (
     <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
-          Learn React
-        </a>
-      </header>
+      <Pagination
+        activePage={2}
+        totalItems={10}
+        perPage={1}
+        withActions={true}
+        classes={{ btn: css.btn, activeBtn: css.active }}
+        onChangePage={newPage => {}}
+      />
+      <br />
+      <Pagination
+        activePage={2}
+        totalItems={10}
+        perPage={1}
+        classes={{ btn: css.btn, activeBtn: css.active }}
+        onChangePage={newPage => {}}
+      />
+
+      {/* <Timer time={1000} autostart={true} step={3000} onTick={() => {}} onTimeEnd={() => {}}
+        onTimeStart={() => {}} onTimePause={() => {}} /> */}
     </div>
   );
 }
