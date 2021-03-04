@@ -16,23 +16,25 @@ interface TimerProps {
 export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, onTimePause }: TimerProps) => {
   const [currentTime, setCurrentTime] = useState<number>(time);
   const [timerState, setTimerState] = useState<boolean>(false);
+  const [intervalTimer, setIntervalTimer] = useState<number>(0);
 
-  let interval: any;
   const startTimer = (timeLeft: number) => {
     // if (onTimeStart) {onTimeStart()};
     setTimerState(true);
 
-    interval = setInterval(() => {
+    const interval = setInterval(() => {
       // if (onTick) {onTick()};
       timeLeft--;
       setCurrentTime(timeLeft);
 
       if (timeLeft <= 0) {
-        clearInterval(interval);
+        clearInterval(intervalTimer);
         setTimerState(false);
         // if (onTimeEnd) {onTimeEnd()};
       }
     }, step);
+
+    setIntervalTimer(interval);
   };
 
   const stopTimer = () => {
@@ -40,9 +42,9 @@ export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, o
       onTimePause();
     }
     setTimerState(false);
-    console.log(interval);
+    console.log('intervalTimer', intervalTimer);
 
-    clearInterval(interval);
+    clearInterval(intervalTimer);
   };
 
   useEffect(() => {
