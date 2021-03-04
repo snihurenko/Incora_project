@@ -27,23 +27,39 @@ function App() {
       /> */}
 
       <Timer
-        time={30}
+        time={10}
         autostart={true}
         step={1000}
-        onTick={() => {}}
-        onTimeEnd={() => {}}
-        onTimeStart={() => {}}
-        onTimePause={() => {}}
+        onTick={() => {
+          console.log('tick');
+        }}
+        onTimeEnd={() => {
+          console.log('time ended');
+        }}
+        onTimeStart={() => {
+          console.log('time started');
+        }}
+        onTimePause={() => {
+          console.log('time paused');
+        }}
       />
 
       <Timer
         time={200}
-        autostart={false}
+        autostart={true}
         step={1000}
-        onTick={() => {}}
-        onTimeEnd={() => {}}
-        onTimeStart={() => {}}
-        onTimePause={() => {}}
+        onTick={() => {
+          console.log('tick');
+        }}
+        onTimeEnd={() => {
+          console.log('time ended');
+        }}
+        onTimeStart={() => {
+          console.log('time started');
+        }}
+        onTimePause={() => {
+          console.log('time paused');
+        }}
       />
     </div>
   );

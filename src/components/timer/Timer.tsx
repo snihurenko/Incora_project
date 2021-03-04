@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import css from './Timer.module.scss';
+import moment from 'moment';
 
 interface TimerProps {
   time: number; //time to countdown in seconds
@@ -18,22 +19,29 @@ export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, o
 
   let interval: any;
   const startTimer = (timeLeft: number) => {
-    console.log(timeLeft);
-
+    // if (onTimeStart) {onTimeStart()};
     setTimerState(true);
 
-    interval = setInterval(timeLeft => {
+    interval = setInterval(() => {
+      // if (onTick) {onTick()};
       timeLeft--;
       setCurrentTime(timeLeft);
 
       if (timeLeft <= 0) {
         clearInterval(interval);
         setTimerState(false);
+        // if (onTimeEnd) {onTimeEnd()};
       }
     }, step);
   };
 
   const stopTimer = () => {
+    if (onTimePause) {
+      onTimePause();
+    }
+    setTimerState(false);
+    console.log(interval);
+
     clearInterval(interval);
   };
 
@@ -45,9 +53,14 @@ export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, o
 
   const barWidth = `${100 - (100 - currentTime * (100 / time))}%`;
 
+  const seconds = Math.floor(currentTime % 60),
+    minutes = Math.floor((currentTime / 60) % 60);
+
+  const formatted = `${minutes}:${seconds}`;
+
   return (
     <div className={css.timerContainer}>
-      <div className={css.timer}>{currentTime}</div>
+      <div className={css.timer}>{moment(formatted, 'mm:ss').format('mm:ss')}</div>
       {timerState ? (
         <button className={css.toggleTimer} onClick={() => stopTimer()}>
           Stop
