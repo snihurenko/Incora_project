@@ -6,47 +6,41 @@ interface TimerProps {
   time: number;
   autostart?: boolean;
   step: number;
-  onTick: () => void;
-  onTimeEnd: () => void;
-  onTimeStart: () => void;
-  onTimePause: () => void;
+  onTick?: () => void;
+  onTimeEnd?: () => void;
+  onTimeStart?: () => void;
+  onTimePause?: () => void;
 }
 
 export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, onTimePause }: TimerProps) => {
   const [currentTime, setCurrentTime] = useState<number>(time);
-  const [timerState, setTimerState] = useState<boolean>(false);
-  const [intervalTimer, setIntervalTimer] = useState<NodeJS.Timeout>();
+  const [isTimerStarted, setIsTimerStarted] = useState<boolean>(false);
+  const [intervalTimer, setIntervalTimer] = useState<NodeJS.Timeout | null>(null);
 
   const startTimer = (timeLeft: number) => {
-    if (onTimeStart) {
-      onTimeStart();
-    }
-    setTimerState(true);
+    onTimeStart?.();
+    setIsTimerStarted(true);
 
     const interval = setInterval(() => {
-      if (onTick) {
-        onTick();
-      }
+      onTick?.();
       timeLeft--;
       setCurrentTime(timeLeft);
 
       if (timeLeft <= 0) {
         clearInterval(intervalTimer!);
-        setTimerState(false);
-        if (onTimeEnd) {
-          onTimeEnd();
-        }
+        setIntervalTimer(null);
+        setIsTimerStarted(false);
+        onTimeEnd?.();
       }
     }, step);
     setIntervalTimer(interval);
   };
 
   const stopTimer = () => {
-    if (onTimePause) {
-      onTimePause();
-    }
-    setTimerState(false);
+    onTimePause?.();
+    setIsTimerStarted(false);
     clearInterval(intervalTimer!);
+    setIntervalTimer(null);
   };
 
   useEffect(() => {
@@ -55,18 +49,24 @@ export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, o
     }
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (intervalTimer) {
+        clearInterval(intervalTimer);
+      }
+    };
+  }, []);
+
   const barWidth = `${100 - (100 - currentTime * (100 / time))}%`;
-
-  const seconds = Math.floor(currentTime % 60),
-    minutes = Math.floor((currentTime / 60) % 60);
-
+  const seconds = Math.floor(currentTime % 60);
+  const minutes = Math.floor((currentTime / 60) % 60);
   const formatted = `${minutes}:${seconds}`;
 
   return (
     <div className={css.timerContainer}>
       <div className={css.timer}>{moment(formatted, 'mm:ss').format('mm:ss')}</div>
-      {timerState ? (
-        <button className={css.toggleTimer} onClick={() => stopTimer()}>
+      {isTimerStarted ? (
+        <button className={css.toggleTimer} onClick={stopTimer}>
           Stop
         </button>
       ) : (

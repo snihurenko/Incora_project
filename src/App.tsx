@@ -45,12 +45,9 @@ function App() {
       />
 
       <Timer
-        time={200}
+        time={10}
         autostart={true}
-        step={1000}
-        onTick={() => {
-          console.log('tick');
-        }}
+        step={5000}
         onTimeEnd={() => {
           console.log('time ended');
         }}
