@@ -29,7 +29,7 @@ function App() {
       <Timer
         time={10}
         autostart={true}
-        step={1000}
+        step={2000}
         onTick={() => {
           console.log('tick');
         }}
