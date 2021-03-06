@@ -22,14 +22,14 @@ export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, o
     setIsTimerStarted(true);
 
     const interval = setInterval(() => {
-      if (timeLeft <= 0) {
+      if (timeLeft === 0) {
         clearInterval(intervalTimer!);
         setIntervalTimer(null);
         setIsTimerStarted(false);
         onTimeEnd?.();
       } else {
         onTick?.();
-        timeLeft--;
+        timeLeft -= step / 1000;
         setCurrentTime(timeLeft);
       }
     }, step);
@@ -65,7 +65,6 @@ export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, o
   return (
     <div className={css.timerContainer}>
       <div className={css.timer}>{moment(formatted, 'mm:ss').format('mm:ss')}</div>
-      <div className={css.timer}>{currentTime}</div>
       {isTimerStarted ? (
         <button className={css.toggleTimer} onClick={stopTimer}>
           Stop
