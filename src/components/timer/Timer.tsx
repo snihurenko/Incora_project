@@ -23,10 +23,10 @@ export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, o
 
     const interval = setInterval(() => {
       if (timeLeft === 0) {
-        clearInterval(intervalTimer!);
-        setIntervalTimer(null);
         setIsTimerStarted(false);
         onTimeEnd?.();
+        clearInterval(interval);
+        setIntervalTimer(null);
       } else {
         onTick?.();
         timeLeft -= step / 1000;
@@ -45,7 +45,7 @@ export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, o
 
   useEffect(() => {
     if (autostart) {
-      startTimer(time);
+      startTimer(currentTime);
     }
   }, []);
 
@@ -70,7 +70,17 @@ export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, o
           Stop
         </button>
       ) : (
-        <button className={css.toggleTimer} onClick={() => startTimer(time)}>
+        <button
+          className={css.toggleTimer}
+          onClick={() => {
+            if (currentTime === 0) {
+              setCurrentTime(time);
+              startTimer(time);
+            } else {
+              startTimer(currentTime);
+            }
+          }}
+        >
           Start
         </button>
       )}
