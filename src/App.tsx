@@ -43,8 +43,6 @@ function App() {
         >
           Filter candy
         </button>
-        <br />
-        <button onClick={() => applyFilter({} as IFilterOptions)}>Reset filters</button>
       </div>
 
       <div>

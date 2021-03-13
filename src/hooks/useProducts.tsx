@@ -83,9 +83,7 @@ export const useProducts = ({ perPage }: IProducts) => {
   const [page, setPage] = useState<number>(1);
   const [filterOption, setFilterOption] = useState<IFilterOptions>({});
 
-  const total = useMemo(() => Math.ceil(products.length / perPage), [perPage, products]);
-
-  const productsPerPage = useMemo(() => {
+  const { productsPerPage, total } = useMemo(() => {
     const filteredProducts = products.filter(item => {
       let filter = true;
 
@@ -103,16 +101,15 @@ export const useProducts = ({ perPage }: IProducts) => {
 
     const startPage = (page - 1) * perPage;
     const endPage = startPage + perPage;
+    const productsPerPage = filteredProducts.slice(startPage, endPage);
+    const total = filteredProducts.length / perPage;
 
-    return products.slice(startPage, endPage);
-  }, [page, products, total]);
+    return { productsPerPage, total };
+  }, [page, products, filterOption]);
 
-  const changePage = useCallback(
-    page => {
-      setPage(page);
-    },
-    [page]
-  );
+  const changePage = useCallback(page => {
+    setPage(page);
+  }, []);
 
   const addProduct = (newProduct: Product) => {
     setProducts(prev => [...prev, newProduct]);
@@ -133,12 +130,9 @@ export const useProducts = ({ perPage }: IProducts) => {
     setProducts(editedProducts);
   };
 
-  const applyFilter = useCallback(
-    (filterOption: IFilterOptions) => {
-      setFilterOption(filterOption);
-    },
-    [products]
-  );
+  const applyFilter = useCallback((filterOption: IFilterOptions) => {
+    setFilterOption(filterOption);
+  }, []);
 
   return {
     productsPerPage,
