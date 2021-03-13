@@ -30,18 +30,21 @@ function App() {
 
       <div>
         <button onClick={() => addProduct({ id: 20, name: 'melon', price: 10 })}>Add product</button>
+        <br />
         <button onClick={() => applyFilter({ priceMore: 10 } as IFilterOptions)}>
           Filter price more than 10
         </button>
         <button onClick={() => applyFilter({ priceLess: 20 } as IFilterOptions)}>
           Filter price less than 20
         </button>
-        <button onClick={() => applyFilter({ name: 'melon' } as IFilterOptions)}>Filter name melon</button>
+        <button onClick={() => applyFilter({ name: 'candy' } as IFilterOptions)}>Filter name candy</button>
         <button
           onClick={() => applyFilter({ name: 'candy', priceMore: 10, priceLess: 20 } as IFilterOptions)}
         >
           Filter candy
         </button>
+        <br />
+        <button onClick={() => applyFilter({} as IFilterOptions)}>Reset filters</button>
       </div>
 
       <div>

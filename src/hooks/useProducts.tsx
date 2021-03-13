@@ -79,8 +79,6 @@ interface IProducts {
 }
 
 export const useProducts = ({ perPage }: IProducts) => {
-  console.log(productsList);
-
   const [products, setProducts] = useState<Product[]>(productsList);
   const [page, setPage] = useState<number>(1);
 
@@ -130,6 +128,10 @@ export const useProducts = ({ perPage }: IProducts) => {
 
       if (filterOption.priceLess!) {
         setProducts(products.filter((item: Product) => item.price < filterOption.priceLess!));
+      }
+
+      if (Object.keys(filterOption).length === 0) {
+        setProducts(productsList);
       }
     },
     [products]
