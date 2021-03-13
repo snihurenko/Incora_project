@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import css from './Timer.module.scss';
 import moment from 'moment';
+import { useTimer } from './useTimer';
 interface TimerProps {
   time: number;
   autostart?: boolean;
@@ -12,80 +13,93 @@ interface TimerProps {
   onTimePause?: () => void;
 }
 
-export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, onTimePause }: TimerProps) => {
-  const [currentTime, setCurrentTime] = useState<number>(time);
-  const [isTimerStarted, setIsTimerStarted] = useState<boolean>(false);
-  const [intervalTimer, setIntervalTimer] = useState<NodeJS.Timeout | null>(null);
+// export const Timer = ({ time, autostart, step, onTick, onTimeEnd, onTimeStart, onTimePause }: TimerProps) => {
+//   const [currentTime, setCurrentTime] = useState<number>(time);
+//   const [isTimerStarted, setIsTimerStarted] = useState<boolean>(false);
+//   const [intervalTimer, setIntervalTimer] = useState<NodeJS.Timeout | null>(null);
 
-  const startTimer = (timeLeft: number) => {
-    onTimeStart?.();
-    setIsTimerStarted(true);
+//   // const startTimer = (timeLeft: number) => {
+//   //   onTimeStart?.();
+//   //   setIsTimerStarted(true);
 
-    const interval = setInterval(() => {
-      if (timeLeft === 0) {
-        setIsTimerStarted(false);
-        onTimeEnd?.();
-        clearInterval(interval);
-        setIntervalTimer(null);
-      } else {
-        onTick?.();
-        timeLeft -= step / 1000;
-        setCurrentTime(timeLeft);
-      }
-    }, step);
-    setIntervalTimer(interval);
-  };
+//   //   const interval = setInterval(() => {
+//   //     if (timeLeft === 0) {
+//   //       setIsTimerStarted(false);
+//   //       onTimeEnd?.();
+//   //       clearInterval(interval);
+//   //       setIntervalTimer(null);
+//   //     } else {
+//   //       onTick?.();
+//   //       timeLeft -= step / 1000;
+//   //       setCurrentTime(timeLeft);
+//   //     }
+//   //   }, step);
+//   //   setIntervalTimer(interval);
+//   // };
 
-  const stopTimer = () => {
-    onTimePause?.();
-    setIsTimerStarted(false);
-    clearInterval(intervalTimer!);
-    setIntervalTimer(null);
-  };
+//   // const stopTimer = () => {
+//   //   onTimePause?.();
+//   //   setIsTimerStarted(false);
+//   //   clearInterval(intervalTimer!);
+//   //   setIntervalTimer(null);
+//   // };
 
-  useEffect(() => {
-    if (autostart) {
-      startTimer(currentTime);
-    }
-  }, []);
+//   // useEffect(() => {
+//   //   if (autostart) {
+//   //     startTimer(currentTime);
+//   //   }
+//   // }, []);
 
-  useEffect(() => {
-    return () => {
-      if (intervalTimer) {
-        clearInterval(intervalTimer);
-      }
-    };
-  }, []);
+//   // useEffect(() => {
+//   //   return () => {
+//   //     if (intervalTimer) {
+//   //       clearInterval(intervalTimer);
+//   //     }
+//   //   };
+//   // }, []);
 
-  const barWidth = `${100 - (100 - currentTime * (100 / time))}%`;
-  const seconds = Math.floor(currentTime % 60);
-  const minutes = Math.floor((currentTime / 60) % 60);
-  const formatted = `${minutes}:${seconds}`;
+//   // const barWidth = `${100 - (100 - currentTime * (100 / time))}%`;
+//   // const seconds = Math.floor(currentTime % 60);
+//   // const minutes = Math.floor((currentTime / 60) % 60);
+//   // const formatted = `${minutes}:${seconds}`;
+
+//   return (
+//     <div className={css.timerContainer}>
+//       <div className={css.timer}>{moment(formatted, 'mm:ss').format('mm:ss')}</div>
+//       {isTimerStarted ? (
+//         <button className={css.toggleTimer} onClick={stopTimer}>
+//           Stop
+//         </button>
+//       ) : (
+//         <button
+//           className={css.toggleTimer}
+//           onClick={() => {
+//             if (currentTime === 0) {
+//               setCurrentTime(time);
+//               startTimer(time);
+//             } else {
+//               startTimer(currentTime);
+//             }
+//           }}
+//         >
+//           Start
+//         </button>
+//       )}
+
+//       <div className={css.bar} style={{ width: barWidth }}></div>
+//     </div>
+//   );
+// };
+
+export const Timer = () => {
+  const { time, startTimer, stopTimer, pauseTimer, isPaused, isFinished } = useTimer(10);
 
   return (
-    <div className={css.timerContainer}>
-      <div className={css.timer}>{moment(formatted, 'mm:ss').format('mm:ss')}</div>
-      {isTimerStarted ? (
-        <button className={css.toggleTimer} onClick={stopTimer}>
-          Stop
-        </button>
-      ) : (
-        <button
-          className={css.toggleTimer}
-          onClick={() => {
-            if (currentTime === 0) {
-              setCurrentTime(time);
-              startTimer(time);
-            } else {
-              startTimer(currentTime);
-            }
-          }}
-        >
-          Start
-        </button>
-      )}
-
-      <div className={css.bar} style={{ width: barWidth }}></div>
+    <div>
+      <button onClick={startTimer}>Start</button>
+      <button onClick={pauseTimer}>Pause</button>
+      <button onClick={stopTimer}>Stop</button>
+      <div>{time}</div>
     </div>
   );
 };
