@@ -81,12 +81,29 @@ interface IProducts {
 export const useProducts = ({ perPage }: IProducts) => {
   const [products, setProducts] = useState<Product[]>(productsList);
   const [page, setPage] = useState<number>(1);
+  const [filterOption, setFilterOption] = useState<IFilterOptions>({});
 
   const total = useMemo(() => Math.ceil(products.length / perPage), [perPage, products]);
 
   const productsPerPage = useMemo(() => {
+    const filteredProducts = products.filter(item => {
+      let filter = true;
+
+      if (filterOption.name!) {
+        filter = filter && filterOption.name === item.name;
+      }
+      if (filterOption.priceMore!) {
+        filter = filter && item.price > filterOption.priceMore;
+      }
+      if (filterOption.priceLess!) {
+        filter = filter && item.price < filterOption.priceLess;
+      }
+      return filter;
+    });
+
     const startPage = (page - 1) * perPage;
     const endPage = startPage + perPage;
+
     return products.slice(startPage, endPage);
   }, [page, products, total]);
 
@@ -118,21 +135,7 @@ export const useProducts = ({ perPage }: IProducts) => {
 
   const applyFilter = useCallback(
     (filterOption: IFilterOptions) => {
-      if (filterOption.name!) {
-        setProducts(products.filter((item: Product) => item.name === filterOption.name));
-      }
-
-      if (filterOption.priceMore!) {
-        setProducts(products.filter((item: Product) => item.price > filterOption.priceMore!));
-      }
-
-      if (filterOption.priceLess!) {
-        setProducts(products.filter((item: Product) => item.price < filterOption.priceLess!));
-      }
-
-      if (Object.keys(filterOption).length === 0) {
-        setProducts(productsList);
-      }
+      setFilterOption(filterOption);
     },
     [products]
   );
