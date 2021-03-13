@@ -8,7 +8,7 @@ import { useProducts, Product, IFilterOptions } from './hooks/useProducts';
 
 function App() {
   const {
-    products,
+    productsPerPage,
     page,
     total,
     changePage,
@@ -45,18 +45,12 @@ function App() {
       </div>
 
       <div>
-        {(products as Product[]).map((item: Product, index: number) => {
+        {(productsPerPage as Product[]).map((item: Product, index: number) => {
           return (
             <div key={index}>
               <h3>{item.name}</h3>
               <p>price: {item.price}</p>
-              <button
-                onClick={() => {
-                  deleteProduct(item);
-                }}
-              >
-                Delete product
-              </button>
+              <button onClick={() => deleteProduct(item)}>Delete product</button>
               <button
                 onClick={() => {
                   editProduct({ id: item.id, name: 'cheese', price: 20 });

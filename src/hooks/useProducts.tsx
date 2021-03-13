@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useCallback } from 'react';
-
 export interface Product {
   id: number;
   name: string;
@@ -80,17 +79,18 @@ interface IProducts {
 }
 
 export const useProducts = ({ perPage }: IProducts) => {
-  const [products, setProducts] = useState<Product[] | []>(productsList);
-  const [page, setPage] = useState<number>(1);
-  const [total, setTotal] = useState<number>(0);
+  console.log(productsList);
 
-  const totalCount = useMemo(() => setTotal(Math.floor(productsList.length / perPage)), [perPage]);
+  const [products, setProducts] = useState<Product[]>(productsList);
+  const [page, setPage] = useState<number>(1);
+
+  const total = useMemo(() => Math.floor(productsList.length / perPage), [perPage]);
 
   const productsPerPage = useMemo(() => {
     const startPage = (page - 1) * perPage;
     const endPage = startPage + perPage;
-    setProducts(productsList.slice(startPage, endPage));
-  }, [page]);
+    return products.slice(startPage, endPage);
+  }, [page, products]);
 
   const changePage = useCallback(
     page => {
@@ -136,7 +136,7 @@ export const useProducts = ({ perPage }: IProducts) => {
   );
 
   return {
-    products,
+    productsPerPage,
     page,
     total,
     changePage,
