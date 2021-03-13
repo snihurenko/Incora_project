@@ -84,13 +84,13 @@ export const useProducts = ({ perPage }: IProducts) => {
   const [products, setProducts] = useState<Product[]>(productsList);
   const [page, setPage] = useState<number>(1);
 
-  const total = useMemo(() => Math.floor(productsList.length / perPage), [perPage]);
+  const total = useMemo(() => Math.ceil(products.length / perPage), [perPage, products]);
 
   const productsPerPage = useMemo(() => {
     const startPage = (page - 1) * perPage;
     const endPage = startPage + perPage;
     return products.slice(startPage, endPage);
-  }, [page, products]);
+  }, [page, products, total]);
 
   const changePage = useCallback(
     page => {
