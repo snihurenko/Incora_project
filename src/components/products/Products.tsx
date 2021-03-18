@@ -5,6 +5,7 @@ export interface Product {
   id: number;
   name: string;
   price: number;
+  quantity?: number;
 }
 
 const productsArray: Product[] = [
@@ -59,14 +60,21 @@ export function Products() {
   const [products, setProducts] = useState<Product[]>(productsArray);
   const { cart, setCart } = useContext(ProductsContext);
 
-  const addToCart = (item: Product) => {
-    console.log(item);
+  const addToCart = (product: Product) => {
+    const addedItemIndex = cart.findIndex(item => item.name === product.name);
 
-    //setCart((prev) => [...prev, item]);
+    if (addedItemIndex < 0) {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    } else {
+      const addedItem = {
+        ...cart[addedItemIndex]
+      };
 
-    setCart([...cart, { ...item }]);
-
-    setCart([{ id: 90, name: 'newww', price: 200 }]);
+      if (addedItem.quantity) {
+        addedItem.quantity++;
+      }
+      cart[addedItemIndex] = addedItem;
+    }
   };
 
   return (
