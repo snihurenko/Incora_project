@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Product } from './Products';
-import CartContext from './context';
+import ProductsContext from './context';
 
 export function Cart() {
-  const { cart, setCart } = useContext(CartContext);
+  const { state, dispatch } = useContext(ProductsContext);
 
-  const totalPrice = cart.reduce((sum, product) => {
+  const totalPrice = state.cart.reduce((sum: any, product: any) => {
     if (product.quantity) {
       return sum + product.price * product.quantity;
     } else {
@@ -13,26 +13,19 @@ export function Cart() {
     }
   }, 0);
 
-  const deleteProduct = (product: Product) => {
-    if (product.quantity! > 1) {
-      product.quantity!--;
-      setCart([...cart]);
-    } else {
-      setCart(cart.filter((item: Product) => item.id !== product.id));
-    }
-  };
-
   return (
     <div>
-      {cart.length > 0 ? <h2>Products in cart: </h2> : <h2>No products in cart </h2>}
-      {(cart as Product[]).map((item: Product, index: number) => {
+      {state.cart.length > 0 ? <h2>Products in cart: </h2> : <h2>No products in cart </h2>}
+      {(state.cart as Product[]).map((item: Product, index: number) => {
         return (
           <div key={index}>
             <h3>
               {item.name} ({item.quantity ? item.quantity : 1})
             </h3>
             <p>price: {item.price}</p>
-            <button onClick={() => deleteProduct(item)}>Delete from cart</button>
+            <button onClick={() => dispatch({ type: 'DELETE_FROM_CART', payload: item })}>
+              Delete from cart
+            </button>
           </div>
         );
       })}

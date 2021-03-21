@@ -57,25 +57,8 @@ const productsArray: Product[] = [
 ];
 
 export function Products() {
-  const [products, setProducts] = useState<Product[]>(productsArray);
-  const { cart, setCart } = useContext(ProductsContext);
-
-  const addToCart = (product: Product) => {
-    const addedItemIndex = cart.findIndex(item => item.name === product.name);
-
-    if (addedItemIndex < 0) {
-      setCart([...cart, { ...product, quantity: 1 }]);
-    } else {
-      const addedItem = {
-        ...cart[addedItemIndex]
-      };
-
-      if (addedItem.quantity) {
-        addedItem.quantity++;
-      }
-      cart[addedItemIndex] = addedItem;
-    }
-  };
+  const [products] = useState<Product[]>(productsArray);
+  const { state, dispatch } = useContext(ProductsContext);
 
   return (
     <div>
@@ -85,7 +68,7 @@ export function Products() {
           <div key={index}>
             <h3>{item.name}</h3>
             <p>price: {item.price}</p>
-            <button onClick={() => addToCart(item)}>Add to cart</button>
+            <button onClick={() => dispatch({ type: 'ADD_TO_CART', payload: item })}>Add to cart</button>
           </div>
         );
       })}

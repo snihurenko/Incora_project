@@ -6,7 +6,9 @@ interface ProductsContext {
   setCart(value: Product[]): void;
 }
 
-export default React.createContext<ProductsContext>({
-  cart: [],
-  setCart: () => {}
-});
+// export default React.createContext<ProductsContext>({
+//   cart: [],
+//   setCart: () => {}
+// });
+
+export default React.createContext<any>({});
