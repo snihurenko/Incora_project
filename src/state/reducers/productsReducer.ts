@@ -23,7 +23,7 @@ export default (state = initialState, action: any) => {
     case Types.DELETE_PRODUCT: {
       return {
         ...state,
-        products: state.products.filter((product: IProduct) => product.name !== action.payload.name)
+        products: state.products.filter((product: IProduct) => product.id !== action.payload.id)
       };
     }
     case Types.DELETE_ALL_PRODUCTS: {
