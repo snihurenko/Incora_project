@@ -12,7 +12,7 @@ const initialState: any = {
 const reducer = (state = initialState, action: any) => {
   switch (action.type) {
     case 'ADD_TO_CART': {
-      const addedItemIndex = state.cart.findIndex((item: Product) => item.name === action.payload.name);
+      const addedItemIndex = state.cart.findIndex((item: Product) => item.id === action.payload.id);
 
       if (addedItemIndex < 0) {
         return {
