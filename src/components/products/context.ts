@@ -1,12 +1,12 @@
 import React from 'react';
 import { Product } from './Products';
 
-interface ProductsContext {
+interface ProductsContextValue {
   cart: Product[];
   setCart(value: Product[]): void;
 }
 
-export default React.createContext<ProductsContext>({
+export default React.createContext<ProductsContextValue>({
   cart: [],
   setCart: () => {}
 });

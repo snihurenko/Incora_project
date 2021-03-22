@@ -61,7 +61,7 @@ export function Products() {
   const { cart, setCart } = useContext(ProductsContext);
 
   const addToCart = (product: Product) => {
-    const addedItemIndex = cart.findIndex(item => item.name === product.name);
+    const addedItemIndex = cart.findIndex(item => item.id === product.id);
 
     if (addedItemIndex < 0) {
       setCart([...cart, { ...product, quantity: 1 }]);

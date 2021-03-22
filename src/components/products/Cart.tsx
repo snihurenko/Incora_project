@@ -1,17 +1,19 @@
-import React, { useState, useContext } from 'react';
+import React, { useMemo, useContext } from 'react';
 import { Product } from './Products';
 import CartContext from './context';
 
 export function Cart() {
   const { cart, setCart } = useContext(CartContext);
 
-  const totalPrice = cart.reduce((sum, product) => {
-    if (product.quantity) {
-      return sum + product.price * product.quantity;
-    } else {
-      return sum + product.price;
-    }
-  }, 0);
+  const totalPrice = useMemo(() => {
+    return cart.reduce((sum, product) => {
+      if (product.quantity) {
+        return sum + product.price * product.quantity;
+      } else {
+        return sum + product.price;
+      }
+    }, 0);
+  }, [cart]);
 
   const deleteProduct = (product: Product) => {
     if (product.quantity! > 1) {
