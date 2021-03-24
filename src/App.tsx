@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { ComponentTest } from './components/ComponentTest';
+import React from 'react';
 import './App.scss';
+import { PaymentForm } from './pages/PaymentForm';
 
 function App() {
   return (
     <div className='App'>
-      <ComponentTest />
+      <PaymentForm />
     </div>
   );
 }

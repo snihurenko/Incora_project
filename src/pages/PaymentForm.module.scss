@@ -1,0 +1,42 @@
+.formWrapper {
+  background-color: #eef3f8;
+  border: 2px solid #cbd1d7;
+  width: 500px;
+  margin: 50px auto;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.column2 {
+  width: 50%;
+  margin: 10px;
+}
+
+.column3 {
+  width: 30%;
+  margin: 10px;
+}
+
+.btnSubmit {
+  padding: 15px 20px;
+  font-size: 16px;
+  background-color: #3f74e3;
+  border: transparent;
+  border-radius: 5px;
+  color: #fff;
+  width: 300px;
+}
+
+.h3 {
+  text-align: left;
+  padding: 0;
+  margin-left: 5px;
+}
+
+.wrapButtons {
+  margin: 10px;
+  padding-top: 10px;
+  border-top: 2px solid #b8beca;
+}
