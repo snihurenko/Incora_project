@@ -22,6 +22,7 @@ export interface SelectProps {
   value?: string;
   name: string;
   error?: string;
+  options: string[];
   onBlur?(e: React.FocusEvent): void;
   onFocus?(e: React.FocusEvent): void;
   onChange?(e: React.ChangeEvent): void;
