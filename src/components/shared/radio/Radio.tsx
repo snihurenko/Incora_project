@@ -1,8 +1,9 @@
 import React from 'react';
-import { InputProps, FormikRadio } from '../../../models/formik';
+import { InputProps } from '../../../models/formik';
 import css from './Radio.module.scss';
 
-export interface FormikRadioProps extends FormikRadio<InputProps> {
+type Radio<T = unknown> = Omit<T, 'value' | 'onChange' | 'onBlur' | 'type'>;
+interface RadioProps extends Radio<InputProps> {
   type: 'radio';
 
   onBlur?(e: React.FocusEvent<Element>): void;
@@ -11,7 +12,7 @@ export interface FormikRadioProps extends FormikRadio<InputProps> {
   value?: string;
 }
 
-export const RadioButton = ({ label, error, ...props }: FormikRadioProps) => {
+export const RadioButton = ({ label, error, ...props }: RadioProps) => {
   return (
     <div className={css.wrapper}>
       <label className={css.label}>

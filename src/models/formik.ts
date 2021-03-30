@@ -16,14 +16,29 @@ export type FormikInput<T = unknown> = Omit<T, 'value' | 'onChange' | 'onBlur'>;
 export type FormikCheckbox<T = unknown> = Omit<T, 'value' | 'onChange' | 'onBlur' | 'type'>;
 export type FormikRadio<T = unknown> = Omit<T, 'value' | 'onChange' | 'onBlur' | 'type'>;
 
-export interface SelectProps {
-  label?: string;
-  selected?: boolean;
+export interface FormikTextInputProps extends FormikInput<InputProps> {
+  type?: 'number' | 'text' | 'email';
+
+  onBlur?(e: React.FocusEvent<Element>): void;
+  onChange?(e: React.ChangeEvent<HTMLInputElement>): void;
+
   value?: string;
-  name: string;
-  error?: string;
-  options: string[];
-  onBlur?(e: React.FocusEvent): void;
-  onFocus?(e: React.FocusEvent): void;
-  onChange?(e: React.ChangeEvent): void;
+}
+
+export interface FormikRadioProps extends FormikRadio<InputProps> {
+  type: 'radio';
+
+  onBlur?(e: React.FocusEvent<Element>): void;
+  onChange?(e: React.ChangeEvent<HTMLInputElement>): void;
+
+  value?: string;
+}
+
+export interface FormikCheckboxProps extends FormikCheckbox<InputProps> {
+  type: 'checkbox';
+
+  onBlur?(e: React.FocusEvent<Element>): void;
+  onChange?(e: React.ChangeEvent<HTMLInputElement>): void;
+
+  value?: string;
 }

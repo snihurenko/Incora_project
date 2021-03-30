@@ -20,6 +20,8 @@ interface UserFormValues {
   state: string;
   zip: string;
   payment: string;
+  same_address: boolean;
+  save_info: boolean;
 }
 
 const defaultValues = {
@@ -32,7 +34,9 @@ const defaultValues = {
   country: '',
   state: '',
   zip: '',
-  payment: ''
+  payment: '',
+  same_address: false,
+  save_info: false
 };
 
 export function PaymentForm() {
@@ -76,16 +80,10 @@ export function PaymentForm() {
           <div className={css.wrapButtons}>
             <FormikCheckbox
               type='checkbox'
-              name='checked'
-              value='same_address'
+              name='same_address'
               label='Shipping address is the same as my billing address'
             />
-            <FormikCheckbox
-              type='checkbox'
-              name='checked'
-              value='save_info'
-              label='Save this information for next time'
-            />
+            <FormikCheckbox type='checkbox' name='save_info' label='Save this information for next time' />
           </div>
           <div className={css.wrapButtons}>
             <h3 className={css.h3}>Payment</h3>

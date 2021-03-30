@@ -1,7 +1,7 @@
 import { useField } from 'formik';
 import React from 'react';
 import { RadioButton } from '../radio';
-import { FormikRadioProps } from '../../shared/radio';
+import { FormikRadioProps } from '../../../models/formik';
 
 export const FormikRadioButton = (props: FormikRadioProps) => {
   const [field, meta] = useField(props.name);

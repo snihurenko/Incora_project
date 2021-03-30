@@ -1,7 +1,7 @@
 import { useField } from 'formik';
 import React from 'react';
 import { Select } from '../select';
-import { FormikTextInputProps } from '../../shared/input/Input';
+import { FormikTextInputProps } from '../../../models/formik';
 
 const countries: string[] = ['USA', 'Ukraine', 'Germany'];
 

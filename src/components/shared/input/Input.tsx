@@ -1,17 +1,8 @@
 import React from 'react';
-import { InputProps, FormikInput } from '../../../models/formik';
+import { InputProps } from '../../../models/formik';
 import css from './Input.module.scss';
 
-export interface FormikTextInputProps extends FormikInput<InputProps> {
-  type?: 'number' | 'text' | 'email';
-
-  onBlur?(e: React.FocusEvent<Element>): void;
-  onChange?(e: React.ChangeEvent<HTMLInputElement>): void;
-
-  value?: string;
-}
-
-export const Input = ({ label, error, ...props }: FormikTextInputProps) => {
+export const Input = ({ label, error, ...props }: InputProps) => {
   return (
     <div>
       <label>

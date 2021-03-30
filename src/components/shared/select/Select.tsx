@@ -1,6 +1,17 @@
 import React from 'react';
-import { SelectProps } from '../../../models/formik';
 import css from './Select.module.scss';
+
+interface SelectProps {
+  label?: string;
+  selected?: boolean;
+  value?: string;
+  name: string;
+  error?: string;
+  options: string[];
+  onBlur?(e: React.FocusEvent): void;
+  onFocus?(e: React.FocusEvent): void;
+  onChange?(e: React.ChangeEvent): void;
+}
 
 export const Select = ({ label, error, options, ...props }: SelectProps) => {
   return (
