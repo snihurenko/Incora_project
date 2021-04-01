@@ -1,5 +1,6 @@
 import React from 'react';
 import { registerUser, loginUser } from '../../api/auth';
+import { useHotels } from '../../hooks/hotels/useHotels';
 
 export const NotFound = () => {
   const createUser = () => {
@@ -28,11 +29,36 @@ export const NotFound = () => {
     }
   };
 
+  const { data, addHotel } = useHotels();
+  console.log(data);
+
+  const createHotel = () => {
+    addHotel({
+      name: 'gvjh5b',
+      description: 'hjvh',
+      phone: '+380630611758',
+      address: {
+        country: 'ygkgeg',
+        city: 'kjhjk',
+        state: 'gygk',
+        street: 'yjgkhbkj',
+        address1: 'bgkbj',
+        address2: 'yghhkj',
+        zip: 12345,
+        location: {
+          latitude: '0',
+          longtitude: '0'
+        }
+      }
+    });
+  };
+
   return (
     <div>
       <p>Register page</p>
       <button onClick={createUser}>Register</button>
       <button onClick={login}>Login</button>
+      <button onClick={createHotel}>Create hotel</button>
     </div>
   );
 };
