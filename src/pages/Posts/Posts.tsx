@@ -1,13 +1,9 @@
 import React from 'react';
-import { idText, ScriptElementKindModifier } from 'typescript';
-//import { registerUser, loginUser } from '../../api/auth';
+import { Post } from '../../api/posts';
 import { usePosts } from '../../hooks/posts/usePosts';
 
 export const Posts = () => {
-  //const { data } = usePosts();
-
   const { data, addNewPost, removePost, changePost, viewPostLimits } = usePosts();
-  // console.log(data);
 
   const createPost = () => {
     addNewPost({
@@ -21,7 +17,7 @@ export const Posts = () => {
     removePost(id);
   };
 
-  const edit = (id: number, post: any) => {
+  const edit = (id: number, post: Post) => {
     changePost(id, post);
   };
 
@@ -45,7 +41,9 @@ export const Posts = () => {
               <button onClick={() => remove(elem.id)}>Delete post</button>
 
               <button
-                onClick={() => edit(elem.id, { userId: 1, title: 'edited post', body: 'edited edited' })}
+                onClick={() =>
+                  edit(elem.id, { id: elem.id, userId: 1, title: 'edited post', body: 'edited edited' })
+                }
               >
                 Edit post
               </button>

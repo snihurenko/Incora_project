@@ -1,23 +1,10 @@
 import { AxiosResponse } from 'axios';
 
-export interface Hotel {
+export interface Post {
   id?: number;
-  name: string;
-  description: string;
-  phone: string;
-  address: {
-    country: string;
-    city: string;
-    state: string;
-    street: string;
-    address1: string;
-    address2: string;
-    zip: number;
-    location: {
-      latitude: string;
-      longtitude: string;
-    };
-  };
+  userId: number;
+  title: string;
+  body: string;
 }
 
 export interface PaginationResponse<T> {
@@ -28,10 +15,10 @@ export interface PaginationResponse<T> {
   total: number;
 }
 
-export type GetHotelsResponse = AxiosResponse<PaginationResponse<Hotel>>;
+export type GetPostsResponse = AxiosResponse<PaginationResponse<Post>>;
 
-export type PostHotelResponse = AxiosResponse<{
-  message: string;
-  objectId: number;
-  statusCode: number;
-}>;
+// export type PostPostsResponse = AxiosResponse<{
+//   message: string;
+//   objectId: number;
+//   statusCode: number;
+// }>;

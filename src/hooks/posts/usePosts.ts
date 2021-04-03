@@ -1,14 +1,13 @@
-import { openStdin } from 'node:process';
 import React from 'react';
-import useSWR, { cache, trigger } from 'swr';
+import useSWR, { cache } from 'swr';
 import { PaginationResponse } from '../../api/hotels/types';
-import { getPosts, addPost, deletePost, editPost, getLimitedPosts } from '../../api/posts';
+import { getPosts, addPost, deletePost, editPost, getLimitedPosts, Post } from '../../api/posts';
 
 export const usePosts = () => {
   const { data, error, mutate } = useSWR('/posts', () => getPosts().then(r => r.data));
   console.log(data);
 
-  const addNewPost = async (post: any) => {
+  const addNewPost = async (post: Post) => {
     const res = await addPost(post);
     const cached: any = cache.get('/posts');
 
@@ -28,15 +27,14 @@ export const usePosts = () => {
     alert(`Post with id: ${id} is deleted`);
   };
 
-  const changePost = async (id: number, post: any) => {
+  const changePost = async (id: number, post: Post) => {
     const res = await editPost(id, post);
     const cached: any = cache.get('/posts');
-    const index = cached.findIndex((elem: any) => elem.id === id);
+    const posts = [...cached];
 
-    cached[index].title = post.title;
-    cached[index].body = post.body;
+    const changed = posts.map(elem => (elem.id === id ? post : elem));
 
-    mutate([...cached], false);
+    mutate([...changed], false);
 
     console.log(res.data);
     alert('Post edited');
@@ -46,8 +44,14 @@ export const usePosts = () => {
     const res = await getLimitedPosts(limit, page);
     const cached: any = cache.get('/posts');
 
-    mutate([...cached], false);
+    const postsPerPage = () => {
+      const startPage = (page - 1) * limit;
+      const endPage = startPage + limit;
+      return cached.slice(startPage, endPage);
+    };
 
+    const mutated = postsPerPage();
+    mutate([...mutated], false);
     console.log(res);
   };
 
