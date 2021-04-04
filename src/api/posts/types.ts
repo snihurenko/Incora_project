@@ -7,18 +7,12 @@ export interface Post {
   body: string;
 }
 
-export interface PaginationResponse<T> {
-  items: T[];
-  itemsCount: number;
-  maxPage: null;
-  page: null;
-  total: number;
-}
+export type GetPostsResponse = AxiosResponse<Post[]>;
 
-export type GetPostsResponse = AxiosResponse<PaginationResponse<Post>>;
+export type PostDataResponse = AxiosResponse<Post>;
 
-// export type PostPostsResponse = AxiosResponse<{
-//   message: string;
-//   objectId: number;
-//   statusCode: number;
-// }>;
+export type DeletePostResponse = AxiosResponse<Post>;
+
+export type EditPostResponse = AxiosResponse<Post>;
+
+export type GetLimitedPostResponse = AxiosResponse<Post[]>;

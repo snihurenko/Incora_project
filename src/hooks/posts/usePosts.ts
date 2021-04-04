@@ -1,6 +1,5 @@
 import React from 'react';
 import useSWR, { cache } from 'swr';
-import { PaginationResponse } from '../../api/hotels/types';
 import { getPosts, addPost, deletePost, editPost, getLimitedPosts, Post } from '../../api/posts';
 
 export const usePosts = () => {
