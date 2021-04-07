@@ -1,0 +1,25 @@
+table,
+th,
+td {
+  border: 1px solid darkgray;
+  border-collapse: collapse;
+}
+
+table {
+  margin-bottom: 20px;
+}
+
+caption {
+  font-weight: 600;
+}
+
+th,
+td {
+  padding: 5px;
+  text-align: center;
+}
+
+.info {
+  font-weight: 400;
+  font-style: italic;
+}
