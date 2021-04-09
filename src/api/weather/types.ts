@@ -1,23 +1,17 @@
 import { AxiosResponse } from 'axios';
-// import { PaginationResponse } from '../../models/api';
 
-// export interface Category {
-//   id: number;
-//   name: string;
-//   description: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   icon: {
-//     id: number;
-//     class: string;
-//     createdAt: string;
-//     updatedAt: string;
-//   };
-// }
+export interface WeatherData {
+  city: object;
+  list: Array<object>;
+}
 
-// export type GetCategoriesRResponse = AxiosResponse<PaginationResponse<Category>>;
-// export type PostCategoryBody = {
-//   name: string;
-//   description: string;
-//   iconId: number;
-// };
+interface PaginationResponse<T> {
+  config: object;
+  data: T;
+  headers: object;
+  request: object;
+  status: number;
+  statusText: string;
+}
+
+export type GetWeatherResponse = AxiosResponse<PaginationResponse<WeatherData>>;

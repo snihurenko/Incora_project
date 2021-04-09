@@ -1,10 +1,9 @@
 import Axios from '../axios';
-// import { GetCategoriesRResponse, PostCategoryBody } from './types';
+import { GetWeatherResponse } from './types';
 
-const city = 'Lviv';
 const API_KEY = '12d2fcdc96ba4f6686c31860ed795f71';
 
-export const getWeather = (city: string): Promise<any> => {
+export const getWeather = (city: string): Promise<GetWeatherResponse> => {
   return Axios.instance.get('', {
     params: {
       q: city,
