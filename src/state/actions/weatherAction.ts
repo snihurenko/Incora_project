@@ -1,7 +1,8 @@
 import { WeatherType } from '../actions/types';
 import { getWeather } from '../../api/weather';
+import { AnyAction, Dispatch } from 'redux';
 
-export const loadWeatherAction = (city: string) => async (dispatch: any) => {
+export const loadWeatherAction = (city: string) => async (dispatch: Dispatch<AnyAction>) => {
   dispatch({
     type: WeatherType.GET_WEATHER_REQUEST
   });

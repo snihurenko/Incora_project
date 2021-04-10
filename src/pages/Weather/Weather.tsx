@@ -10,7 +10,7 @@ export const WeatherPage = () => {
   const dispatch = useDispatch();
 
   const weatherData = useSelector(weatherSelector);
-  const [city, setCity] = useState<string>(weatherData.city.name);
+  const [city, setCity] = useState<string>('Lviv');
 
   useEffect(() => {
     dispatch(loadWeatherAction(city));

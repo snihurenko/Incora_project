@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { WeatherPerDay } from './WeatherPerDay/WeatherPerDay';
 
 export const PaginatedData = ({ data }: any) => {
@@ -6,6 +6,20 @@ export const PaginatedData = ({ data }: any) => {
   const maxPage = Math.ceil(data.length / 8);
   const onNextPage = () => setPage((page + 1) % maxPage);
   const onPrevPage = () => setPage((page + 8 - 1) % maxPage);
+
+  const memoisedData = useMemo(() => {
+    const sliced = data.slice(page * 8, (page + 1) * 8).map((data: any) => {
+      const date = new Date(data.dt * 1000);
+      const day = date.toLocaleDateString('en-GB');
+      const time = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      return {
+        data,
+        time,
+        day
+      };
+    });
+    return sliced;
+  }, [data, page]);
 
   return data.length ? (
     <div>
@@ -18,12 +32,9 @@ export const PaginatedData = ({ data }: any) => {
         </button>
       </div>
       <div>
-        {data.slice(page * 8, (page + 1) * 8).map((data: any) => {
-          const date = new Date(data.dt * 1000);
-          const day = date.toLocaleDateString('en-GB');
-          const time = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-          return <WeatherPerDay data={data} key={data.dt} time={time} day={day} />;
-        })}
+        {memoisedData.map((elem: any) => (
+          <WeatherPerDay data={elem.data} key={elem.data.dt} time={elem.time} day={elem.day} />
+        ))}
       </div>
     </div>
   ) : null;

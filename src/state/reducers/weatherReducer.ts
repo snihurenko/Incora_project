@@ -1,7 +1,7 @@
 import { WeatherType } from '../actions/types';
 
 const initialState = {
-  city: { name: 'Lviv' },
+  city: {},
   forecast: []
 };
 
