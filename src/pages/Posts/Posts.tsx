@@ -3,7 +3,8 @@ import { Post } from '../../api/posts';
 import { usePosts } from '../../hooks/posts/usePosts';
 
 export const Posts = () => {
-  const { data, addNewPost, removePost, changePost, viewPostLimits } = usePosts();
+  const { data, addNewPost, removePost, changePost, viewPostLimits, changePage, currentPage } = usePosts();
+  const totalItems = data?.length;
 
   const createPost = () => {
     addNewPost({
@@ -21,15 +22,31 @@ export const Posts = () => {
     changePost(id, post);
   };
 
-  const limitPosts = () => {
-    viewPostLimits(5, 2);
-  };
-
   return (
     <div>
       <p>JSON Placeholder</p>
       <button onClick={createPost}>Create post</button>
-      <button onClick={limitPosts}>Show only 5 posts per page</button>
+
+      <div>
+        <button
+          onClick={() => {
+            changePage(currentPage - 1);
+            viewPostLimits(5, currentPage - 1);
+          }}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <button
+          onClick={() => {
+            changePage(currentPage + 1);
+            viewPostLimits(5, currentPage + 1);
+          }}
+          disabled={currentPage === totalItems}
+        >
+          Next
+        </button>
+      </div>
 
       {data ? (
         data.map((elem: any) => {

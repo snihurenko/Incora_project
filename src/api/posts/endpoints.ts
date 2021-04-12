@@ -24,6 +24,15 @@ export const editPost = (id: number, post: Post): Promise<EditPostResponse> => {
   return Axios.instance.put(`/posts/${id}`, post);
 };
 
+// export const getLimitedPosts = (limit: number, page: number): Promise<GetLimitedPostResponse> => {
+//   return Axios.instance.get(`/posts?_limit=${limit}&_page=${page}`);
+// };
+
 export const getLimitedPosts = (limit: number, page: number): Promise<GetLimitedPostResponse> => {
-  return Axios.instance.get(`/posts?_limit=${limit}&_page=${page}`);
+  return Axios.instance.get('/posts', {
+    params: {
+      _limit: limit,
+      _page: page
+    }
+  });
 };
