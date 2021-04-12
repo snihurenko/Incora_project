@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { weatherSelector } from '../../state/selectors/weatherSelector';
@@ -8,32 +8,25 @@ import css from './Weather.module.scss';
 
 export const WeatherPage = () => {
   const dispatch = useDispatch();
-
   const weatherData = useSelector(weatherSelector);
-  const [city, setCity] = useState<string>('Lviv');
 
   useEffect(() => {
-    dispatch(loadWeatherAction(city));
+    dispatch(loadWeatherAction('Lviv'));
   }, []);
 
   return (
     <div>
       <Formik
+        enableReinitialize={true}
         initialValues={{ city: '' }}
-        onSubmit={() => {
-          dispatch(loadWeatherAction(city));
-          setCity('');
+        onSubmit={values => {
+          dispatch(loadWeatherAction(values.city));
+          values.city = '';
         }}
       >
         <Form>
-          <label htmlFor='search'>Виберіть місто: </label>
-          <Field
-            id='search'
-            name='search'
-            placeholder='Наприклад: Lviv'
-            value={city}
-            onChange={(e: any) => setCity(e.target.value)}
-          />
+          <label htmlFor='city'>Виберіть місто: </label>
+          <Field id='city' name='city' placeholder='Наприклад: Lviv' />
           <button type='submit'>Пошук</button>
         </Form>
       </Formik>
