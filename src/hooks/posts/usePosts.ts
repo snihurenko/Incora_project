@@ -5,21 +5,11 @@ import { getPosts, addPost, deletePost, editPost, getLimitedPosts, Post } from '
 export const usePosts = () => {
   const { data, error, mutate } = useSWR('/posts', () => getPosts().then(r => r.data));
   const [currentPage, setCurrentPage] = useState(1);
-  console.log(data);
 
   const viewPostLimits = useCallback(async (limit: number, page: number) => {
     const res = await getLimitedPosts(limit, page);
-    const cached: Post[] = cache.get('/posts');
 
-    const postsPerPage = () => {
-      const startPage = (page - 1) * limit;
-      const endPage = startPage + limit;
-      return cached.slice(startPage, endPage);
-    };
-
-    const mutated = postsPerPage();
-    mutate([...mutated], false);
-    console.log(mutated);
+    mutate([...res.data], false);
     console.log(res);
   }, []);
 
